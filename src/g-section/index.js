@@ -40,6 +40,14 @@ const blockAttributes = {
   contentWidth: {
     type: 'number',
   },
+  padding: {
+    type: 'number',
+    default: 50,
+  },
+  margin: {
+    type: 'number',
+    default: 0,
+  },
 };
 
 export const name = 'g-section';
@@ -54,13 +62,17 @@ export const settings = {
   edit ({ attributes, className, setAttributes }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, contentWidth,
+      overlayOpacity, contentWidth, margin, padding,
     } = attributes;
 
     const containerStyle = {
       backgroundColor: backgroundType === 'color' ? backgroundColor : 'black',
       backgroundImage: backgroundType === 'image' && `url('${backgroundImage}')`,
       color: backgroundType === 'image' && 'white',
+      paddingTop: padding && `${padding}px`,
+      paddingBottom: padding && `${padding}px`,
+      marginTop: margin && `${margin}px`,
+      marginBottom: margin && `${margin}px`,
     };
     const overlayStyle = backgroundType === 'color' ? {} : {
       display: 'block',
@@ -91,7 +103,7 @@ export const settings = {
       <Fragment>
         <div className={ className } style={ containerStyle } { ...backgroundImageData }>
           <div className="g-section-overlay" style={ overlayStyle }></div>
-          <div className="g-section-content" style={ wrapperStyle }>
+          <div className="g-section-wrapper" style={ wrapperStyle }>
             <InnerBlocks template={ [] } templateLock={ false } />
           </div>
         </div>
@@ -114,22 +126,50 @@ export const settings = {
                 type="number"
                 id="block-hero-section-content-width-input"
                 value={ contentWidth }
-                onChange={ ev => setAttributes({ contentWidth: parseInt(ev.target.value, 10) }) }
+                onChange={ ev => setAttributes({ contentWidth: parseInt(ev.target.value, 10) || undefined }) }
                 step="10"
                 placeholder="Full width"
               />
             </BaseControl>
+
+            {/* Margin and Padding */}
+            <SelectControl
+              label={ __('Margin') }
+              value={ margin }
+              options={ [{
+                label: __('None'), value: 0,
+              }, {
+                label: __('Small'), value: 25,
+              }, {
+                label: __('Medium'), value: 75,
+              }, {
+                label: __('Large'), value: 125,
+              }] }
+              onChange={ value => setAttributes({ margin: parseInt(value, 10) }) }
+            />
+            <SelectControl
+              label={ __('Padding') }
+              value={ padding }
+              options={ [{
+                label: __('None'), value: 0,
+              }, {
+                label: __('Small'), value: 25,
+              }, {
+                label: __('Medium'), value: 75,
+              }, {
+                label: __('Large'), value: 125,
+              }] }
+              onChange={ value => setAttributes({ padding: parseInt(value, 10) }) }
+            />
 
             {/* Background control */}
             <SelectControl
               label={ __('Background Type') }
               value={ backgroundType }
               options={ [{
-                label: __('Solid Color'),
-                value: 'color',
+                label: __('Solid Color'), value: 'color',
               }, {
-                label: __('Image'),
-                value: 'image',
+                label: __('Image'), value: 'image',
               }] }
               onChange={ value => setAttributes({ backgroundType: value }) }
             />
@@ -159,12 +199,17 @@ export const settings = {
   save ({ attributes, className }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, contentWidth,
+      overlayOpacity, contentWidth, margin, padding,
     } = attributes;
 
     const containerStyle = {
       backgroundColor: backgroundType === 'color' ? backgroundColor : 'black',
       backgroundImage: backgroundType === 'image' && `url('${backgroundImage}')`,
+      color: backgroundType === 'image' && 'white',
+      paddingTop: padding && `${padding}px`,
+      paddingBottom: padding && `${padding}px`,
+      marginTop: margin && `${margin}px`,
+      marginBottom: margin && `${margin}px`,
     };
     const overlayStyle = backgroundType === 'color' ? {} : {
       display: 'block',
@@ -177,7 +222,7 @@ export const settings = {
     return (
       <div className={ className } style={ containerStyle } { ...backgroundImageData }>
         <div className="g-section-overlay" style={ overlayStyle }></div>
-        <div className="g-section-content" style={ wrapperStyle }>
+        <div className="g-section-wrapper" style={ wrapperStyle }>
           <InnerBlocks.Content />
         </div>
       </div>

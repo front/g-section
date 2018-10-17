@@ -1,13 +1,11 @@
 
 .wp-block-cloudblocks-g-section {
   position: relative;
-  background-color: #eee;
   background-size: cover;
   background-position: center center;
 
   margin: 0 0 20px;
-  padding: 100px 0;
-  min-height: 200px;
+  min-height: 100px;
 
   // overlay
   .g-section-overlay {
@@ -23,7 +21,7 @@
   }
 
   // content
-  .g-section-content {
+  .g-section-wrapper {
     position: relative;
     z-index: 2;
     margin: 0 auto;
