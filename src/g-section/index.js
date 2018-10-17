@@ -24,6 +24,7 @@ const blockAttributes = {
   },
   backgroundColor: {
     type: 'string',
+    default: '#eeeeee',
   },
   backgroundImage: {
     type: 'string',
