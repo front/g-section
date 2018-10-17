@@ -37,12 +37,15 @@ const blockAttributes = {
     type: 'number',
     default: 40,
   },
+  overlayColor: {
+    type: 'string',
+  },
   contentWidth: {
     type: 'number',
   },
   padding: {
     type: 'number',
-    default: 50,
+    default: 25,
   },
   margin: {
     type: 'number',
@@ -62,20 +65,22 @@ export const settings = {
   edit ({ attributes, className, setAttributes }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, contentWidth, margin, padding,
+      overlayOpacity, overlayColor, contentWidth, margin, padding,
     } = attributes;
+    const hasImageBg = backgroundType === 'image';
 
     const containerStyle = {
-      backgroundColor: backgroundType === 'color' ? backgroundColor : 'black',
-      backgroundImage: backgroundType === 'image' && `url('${backgroundImage}')`,
-      color: backgroundType === 'image' && 'white',
+      backgroundColor: !hasImageBg ? backgroundColor : 'black',
+      backgroundImage: hasImageBg && `url('${backgroundImage}')`,
+      color: hasImageBg && 'white',
       paddingTop: padding && `${padding}px`,
       paddingBottom: padding && `${padding}px`,
       marginTop: margin && `${margin}px`,
       marginBottom: margin && `${margin}px`,
     };
-    const overlayStyle = backgroundType === 'color' ? {} : {
+    const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
+      backgroundColor: overlayColor || 'black',
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
     const wrapperStyle = {
@@ -108,7 +113,7 @@ export const settings = {
           </div>
         </div>
 
-        { backgroundType === 'image' && <BlockControls>
+        { hasImageBg && <BlockControls>
           <Toolbar>
             <MediaUpload type="image"
               onSelect={ media => onSelectImage(media, 'backgroundImage') } render={ ({ open }) => (
@@ -174,7 +179,7 @@ export const settings = {
               onChange={ value => setAttributes({ backgroundType: value }) }
             />
 
-            { backgroundType === 'image' &&
+            { hasImageBg &&
               <RangeControl
                 label={ __('Overlay Opacity') } value={ overlayOpacity }
                 onChange={ value => setAttributes({ overlayOpacity: value }) }
@@ -182,15 +187,18 @@ export const settings = {
               /> }
           </PanelBody>
 
-          { backgroundType !== 'image' && <PanelColorSettings
+          <PanelColorSettings
             title={ __('Color Settings') }
-            initialOpen={ true }
-            colorSettings={ [{
+            initialOpen={ !hasImageBg }
+            colorSettings={[ !hasImageBg ? {
               value: backgroundColor,
               onChange: value => setAttributes({ backgroundColor: value }),
               label: __('Background Color'),
-            }] }></PanelColorSettings>
-          }
+            } : {
+              value: overlayColor,
+              onChange: value => setAttributes({ overlayColor: value }),
+              label: __('Overlay Color'),
+            } ]} />
         </InspectorControls>
       </Fragment>
     );
@@ -199,20 +207,22 @@ export const settings = {
   save ({ attributes, className }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, contentWidth, margin, padding,
+      overlayOpacity, overlayColor, contentWidth, margin, padding,
     } = attributes;
+    const hasImageBg = backgroundType === 'image';
 
     const containerStyle = {
       backgroundColor: backgroundType === 'color' ? backgroundColor : 'black',
-      backgroundImage: backgroundType === 'image' && `url('${backgroundImage}')`,
+      backgroundImage: hasImageBg && `url('${backgroundImage}')`,
       color: backgroundType === 'image' && 'white',
       paddingTop: padding && `${padding}px`,
       paddingBottom: padding && `${padding}px`,
       marginTop: margin && `${margin}px`,
       marginBottom: margin && `${margin}px`,
     };
-    const overlayStyle = backgroundType === 'color' ? {} : {
+    const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
+      backgroundColor: overlayColor || 'black',
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
     const wrapperStyle = {
