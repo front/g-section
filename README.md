@@ -1,4 +1,4 @@
-# Simple Block
+# Section Block
 > This project was bootstrapped with [Create Cloud Block](https://github.com/front/create-cloud-block).
 
 
@@ -6,7 +6,6 @@ Below you will find some information on how to run scripts.
 
 ## `npm start`
 - Use to compile and run the block in development mode.
-- Watches for any changes and reports back any errors in your code.
 
 
 ## `npm run build`

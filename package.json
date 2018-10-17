@@ -7,7 +7,7 @@
     "js": "build/index.js",
     "css": "build/style.css",
     "screenshot": "screenshot.png",
-    "name": "My Custom Block"
+    "name": "A customizable section block"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack",
