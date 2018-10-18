@@ -114,17 +114,6 @@ export const settings = {
           </div>
         </div>
 
-        { hasImageBg && <BlockControls>
-          <Toolbar>
-            <MediaUpload type="image"
-              onSelect={ media => onSelectImage(media, 'backgroundImage') } render={ ({ open }) => (
-                <IconButton className="components-toolbar__control" label={ __('Edit image') }
-                  icon="edit" onClick={ open } />
-              ) }
-            />
-          </Toolbar>
-        </BlockControls> }
-
         <InspectorControls>
           <PanelBody title={ __('Block Settings') }>
             <BaseControl label={ __('Content Width in pixels') } id="block-hero-section-content-width-input">
@@ -179,6 +168,15 @@ export const settings = {
               }] }
               onChange={ value => setAttributes({ backgroundType: value }) }
             />
+
+            { hasImageBg &&
+              <BaseControl label={ __('Choose background image') }>
+                <MediaUpload type="image"
+                  onSelect={ media => onSelectImage(media, 'backgroundImage') } render={ ({ open }) => (
+                    <IconButton className="components-toolbar__control" label={ __('Edit image') }
+                      icon="edit" onClick={ open } />
+                  )} />
+              </BaseControl> }
 
             { hasImageBg &&
               <RangeControl
