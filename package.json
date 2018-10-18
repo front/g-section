@@ -7,7 +7,7 @@
     "js": "build/index.js",
     "css": "build/style.css",
     "screenshot": "screenshot.png",
-    "name": "A customizable section block"
+    "name": "Section wrapper"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack",

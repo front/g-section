@@ -57,8 +57,8 @@ const blockAttributes = {
 export const name = 'g-section';
 
 export const settings = {
-  title: __('Section'),
-  description: __('A customizable section block.'),
+  title: __('Section wrapper'),
+  description: __('A customizable wrapper for your blocks.'),
   icon: 'cover-image',
 
   attributes: blockAttributes,
@@ -140,7 +140,7 @@ export const settings = {
 
             {/* Margin and Padding */}
             <SelectControl
-              label={ __('Margin') }
+              label={ __('Vertical margin') }
               value={ margin }
               options={ [{
                 label: __('None'), value: 0,
@@ -154,7 +154,7 @@ export const settings = {
               onChange={ value => setAttributes({ margin: parseInt(value, 10) }) }
             />
             <SelectControl
-              label={ __('Padding') }
+              label={ __('Vertical padding') }
               value={ padding }
               options={ [{
                 label: __('None'), value: 0,
