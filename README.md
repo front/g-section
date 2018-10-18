@@ -1,4 +1,5 @@
 # Section Block
+A customizable wrapper for your blocks
 > This project was bootstrapped with [Create Cloud Block](https://github.com/front/create-cloud-block).
 
 
