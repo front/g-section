@@ -105,6 +105,9 @@ export const settings = {
       });
     };
 
+    const [wide, full] = [contentWidth ? 'is-active' : '', contentWidth ? '' : 'is-active'];
+    const WIDTH = 1100;
+
     return (
       <Fragment>
         <div className={ className } style={ containerStyle } { ...backgroundImageData }>
@@ -114,18 +117,17 @@ export const settings = {
           </div>
         </div>
 
+        <BlockControls>
+          <Toolbar>
+            <IconButton label={ __('Wide width') } className={ `components-toolbar__control ${wide}` }
+              icon="align-wide" onClick={ () => setAttributes({ contentWidth: WIDTH })} />
+            <IconButton label={ __('Full width') } className={ `components-toolbar__control ${full}` }
+              icon="align-full-width" onClick={ () => setAttributes({ contentWidth: null }) } />
+          </Toolbar>
+        </BlockControls>
+
         <InspectorControls>
           <PanelBody title={ __('Block Settings') }>
-            <BaseControl label={ __('Content Width in pixels') } id="block-hero-section-content-width-input">
-              <input
-                type="number"
-                id="block-hero-section-content-width-input"
-                value={ contentWidth }
-                onChange={ ev => setAttributes({ contentWidth: parseInt(ev.target.value, 10) || undefined }) }
-                step="10"
-                placeholder="Full width"
-              />
-            </BaseControl>
 
             {/* Margin and Padding */}
             <SelectControl
@@ -174,7 +176,7 @@ export const settings = {
                 <MediaUpload type="image"
                   onSelect={ media => onSelectImage(media, 'backgroundImage') } render={ ({ open }) => (
                     <IconButton className="components-toolbar__control" label={ __('Edit image') }
-                      icon="edit" onClick={ open } />
+                      icon="format-image" onClick={ open } />
                   )} />
               </BaseControl> }
 
