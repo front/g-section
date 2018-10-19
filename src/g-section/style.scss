@@ -35,6 +35,8 @@
     }
   }
 
+
+  // Layout options
   &.alignfull {
     width: 100vw;
     left: 50%;
@@ -57,5 +59,33 @@
 
   .gutenberg__editor &.alignwide {
     max-width: 1140px;
+  }
+
+
+  // Preset margins and paddings
+  &.mv-small {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  &.mv-medium {
+    margin-top: 75px;
+    margin-bottom: 75px;
+  }
+  &.mv-large {
+    margin-top: 125px;
+    margin-bottom: 125px;
+  }
+
+  &.pv-small {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  &.pv-medium {
+    padding-top: 75px;
+    padding-bottom: 75px;
+  }
+  &.pv-large {
+    padding-top: 125px;
+    padding-bottom: 125px;
   }
 }

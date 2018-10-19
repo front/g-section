@@ -42,12 +42,12 @@ const blockAttributes = {
     type: 'string',
   },
   padding: {
-    type: 'number',
-    default: 25,
+    type: 'string',
+    default: 'small',
   },
   margin: {
-    type: 'number',
-    default: 0,
+    type: 'string',
+    default: '',
   },
   align: {
     type: 'string',
@@ -75,10 +75,6 @@ export const settings = {
       backgroundColor: !hasImageBg ? backgroundColor : 'black',
       backgroundImage: hasImageBg && `url('${backgroundImage}')`,
       color: hasImageBg && 'white',
-      paddingTop: padding && `${padding}px`,
-      paddingBottom: padding && `${padding}px`,
-      marginTop: margin && `${margin}px`,
-      marginBottom: margin && `${margin}px`,
     };
 
     const overlayStyle = !hasImageBg ? {} : {
@@ -87,7 +83,23 @@ export const settings = {
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
 
-    const classes = `${className} align${align}`;
+    const classes = [
+      className,
+      `align${align}`,
+    ];
+    if(margin) {
+      classes.push(`mv-${margin}`);
+    }
+    if(padding) {
+      classes.push(`pv-${padding}`);
+    }
+
+    const vOptions = [
+      { label: __('None'), value: '' },
+      { label: __('Small'), value: 'small' },
+      { label: __('Medium'), value: 'medium' },
+      { label: __('Large'), value: 'large' },
+    ];
     const buttonCls = { [align]: 'is-active' };
 
     const onSelectImage = (media, field) => {
@@ -109,7 +121,7 @@ export const settings = {
 
     return (
       <Fragment>
-        <div className={ classes } style={ containerStyle } { ...backgroundImageData }>
+        <div className={ classes.join(' ') } style={ containerStyle } { ...backgroundImageData }>
           <div className="g-section-overlay" style={ overlayStyle }></div>
           <div className="g-section-wrapper">
             <InnerBlocks template={ [] } templateLock={ false } />
@@ -134,41 +146,24 @@ export const settings = {
             <SelectControl
               label={ __('Vertical margin') }
               value={ margin }
-              options={ [{
-                label: __('None'), value: 0,
-              }, {
-                label: __('Small'), value: 25,
-              }, {
-                label: __('Medium'), value: 75,
-              }, {
-                label: __('Large'), value: 125,
-              }] }
-              onChange={ value => setAttributes({ margin: parseInt(value, 10) }) }
+              options={ vOptions }
+              onChange={ value => setAttributes({ margin: value }) }
             />
             <SelectControl
               label={ __('Vertical padding') }
               value={ padding }
-              options={ [{
-                label: __('None'), value: 0,
-              }, {
-                label: __('Small'), value: 25,
-              }, {
-                label: __('Medium'), value: 75,
-              }, {
-                label: __('Large'), value: 125,
-              }] }
-              onChange={ value => setAttributes({ padding: parseInt(value, 10) }) }
+              options={ vOptions }
+              onChange={ value => setAttributes({ padding: value }) }
             />
 
             {/* Background control */}
             <SelectControl
               label={ __('Background Type') }
               value={ backgroundType }
-              options={ [{
-                label: __('Solid Color'), value: 'color',
-              }, {
-                label: __('Image'), value: 'image',
-              }] }
+              options={ [
+                { label: __('Solid Color'), value: 'color' },
+                { label: __('Image'), value: 'image' },
+              ] }
               onChange={ value => setAttributes({ backgroundType: value }) }
             />
 
@@ -217,17 +212,23 @@ export const settings = {
       backgroundColor: !hasImageBg ? backgroundColor : 'black',
       backgroundImage: hasImageBg && `url('${backgroundImage}')`,
       color: backgroundType === 'image' && 'white',
-      paddingTop: padding && `${padding}px`,
-      paddingBottom: padding && `${padding}px`,
-      marginTop: margin && `${margin}px`,
-      marginBottom: margin && `${margin}px`,
     };
     const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
       backgroundColor: overlayColor || 'black',
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
-    const classes = `${className} align${align}`;
+
+    const classes = [
+      className,
+      `align${align}`,
+    ];
+    if(margin) {
+      classes.push(`mv-${margin}`);
+    }
+    if(padding) {
+      classes.push(`pv-${padding}`);
+    }
 
     return (
       <div className={ classes } style={ containerStyle } { ...backgroundImageData }>
