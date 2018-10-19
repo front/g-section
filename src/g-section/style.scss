@@ -4,9 +4,9 @@
   background-size: cover;
   background-position: center center;
 
-  margin: 0 0 20px;
-  padding: 0 20px;
-  min-height: 120px;
+  margin: 0 auto 20px;
+  width: 100%;
+  min-height: 100px;
 
   // overlay
   .g-section-overlay {
@@ -26,12 +26,36 @@
     position: relative;
     z-index: 2;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 20px 0;
 
     &:after {
       clear: both;
       display: block;
       content: " ";
     }
+  }
+
+  &.alignfull {
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+
+    .g-section-wrapper {
+      max-width: 1140px;
+    }
+  }
+
+  .gutenberg__editor &.alignfull {
+    width: calc(100% + 56px);
+    left: 0;
+    right: 0;
+    margin-left: -28px;
+    margin-right: -28px;
+  }
+
+  .gutenberg__editor &.alignwide {
+    max-width: 1140px;
   }
 }

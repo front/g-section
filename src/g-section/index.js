@@ -41,9 +41,6 @@ const blockAttributes = {
   overlayColor: {
     type: 'string',
   },
-  contentWidth: {
-    type: 'number',
-  },
   padding: {
     type: 'number',
     default: 25,
@@ -51,6 +48,10 @@ const blockAttributes = {
   margin: {
     type: 'number',
     default: 0,
+  },
+  align: {
+    type: 'string',
+    default: 'wide',
   },
 };
 
@@ -66,7 +67,7 @@ export const settings = {
   edit ({ attributes, className, setAttributes }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, overlayColor, contentWidth, margin, padding,
+      overlayOpacity, overlayColor, align, margin, padding,
     } = attributes;
     const hasImageBg = backgroundType === 'image';
 
@@ -79,14 +80,15 @@ export const settings = {
       marginTop: margin && `${margin}px`,
       marginBottom: margin && `${margin}px`,
     };
+
     const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
       backgroundColor: overlayColor || 'black',
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
-    const wrapperStyle = {
-      maxWidth: contentWidth && `${contentWidth}px`,
-    };
+
+    const classes = `${className} align${align}`;
+    const buttonCls = { [align]: 'is-active' };
 
     const onSelectImage = (media, field) => {
       const dataAttrs = {};
@@ -105,24 +107,23 @@ export const settings = {
       });
     };
 
-    const [wide, full] = [contentWidth ? 'is-active' : '', contentWidth ? '' : 'is-active'];
-    const WIDTH = 1100;
-
     return (
       <Fragment>
-        <div className={ className } style={ containerStyle } { ...backgroundImageData }>
+        <div className={ classes } style={ containerStyle } { ...backgroundImageData }>
           <div className="g-section-overlay" style={ overlayStyle }></div>
-          <div className="g-section-wrapper" style={ wrapperStyle }>
+          <div className="g-section-wrapper">
             <InnerBlocks template={ [] } templateLock={ false } />
           </div>
         </div>
 
         <BlockControls>
           <Toolbar>
-            <IconButton label={ __('Wide width') } className={ `components-toolbar__control ${wide}` }
-              icon="align-wide" onClick={ () => setAttributes({ contentWidth: WIDTH })} />
-            <IconButton label={ __('Full width') } className={ `components-toolbar__control ${full}` }
-              icon="align-full-width" onClick={ () => setAttributes({ contentWidth: null }) } />
+            <IconButton label={ __('Wide width') }  icon="align-wide"
+              className={ `components-toolbar__control ${buttonCls.wide}` }
+              onClick={ () => setAttributes({ align: 'wide' })} />
+            <IconButton label={ __('Full width') } icon="align-full-width"
+              className={ `components-toolbar__control ${buttonCls.full}` }
+              onClick={ () => setAttributes({ align: 'full' }) } />
           </Toolbar>
         </BlockControls>
 
@@ -208,12 +209,12 @@ export const settings = {
   save ({ attributes, className }) {
     const {
       backgroundType, backgroundColor, backgroundImage, backgroundImageData,
-      overlayOpacity, overlayColor, contentWidth, margin, padding,
+      overlayOpacity, overlayColor, align, margin, padding,
     } = attributes;
     const hasImageBg = backgroundType === 'image';
 
     const containerStyle = {
-      backgroundColor: backgroundType === 'color' ? backgroundColor : 'black',
+      backgroundColor: !hasImageBg ? backgroundColor : 'black',
       backgroundImage: hasImageBg && `url('${backgroundImage}')`,
       color: backgroundType === 'image' && 'white',
       paddingTop: padding && `${padding}px`,
@@ -226,14 +227,12 @@ export const settings = {
       backgroundColor: overlayColor || 'black',
       opacity: parseInt(overlayOpacity, 10) / 100,
     };
-    const wrapperStyle = {
-      maxWidth: contentWidth && `${contentWidth}px`,
-    };
+    const classes = `${className} align${align}`;
 
     return (
-      <div className={ className } style={ containerStyle } { ...backgroundImageData }>
+      <div className={ classes } style={ containerStyle } { ...backgroundImageData }>
         <div className="g-section-overlay" style={ overlayStyle }></div>
-        <div className="g-section-wrapper" style={ wrapperStyle }>
+        <div className="g-section-wrapper">
           <InnerBlocks.Content />
         </div>
       </div>
