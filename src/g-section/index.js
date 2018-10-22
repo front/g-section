@@ -231,7 +231,7 @@ export const settings = {
     }
 
     return (
-      <div className={ classes } style={ containerStyle } { ...backgroundImageData }>
+      <div className={ classes.join(' ') } style={ containerStyle } { ...backgroundImageData }>
         <div className="g-section-overlay" style={ overlayStyle }></div>
         <div className="g-section-wrapper">
           <InnerBlocks.Content />
