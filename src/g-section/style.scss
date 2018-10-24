@@ -43,22 +43,14 @@
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-
-    .g-section-wrapper {
-      max-width: 1140px;
-    }
   }
 
   .gutenberg__editor &.alignfull {
-    width: calc(100% + 56px);
+    width: 100%;
     left: 0;
     right: 0;
-    margin-left: -28px;
-    margin-right: -28px;
-  }
-
-  .gutenberg__editor &.alignwide {
-    max-width: 1140px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
 

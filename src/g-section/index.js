@@ -239,4 +239,9 @@ export const settings = {
       </div>
     );
   },
+
+  getEditWrapperProps (attributes) {
+    const { align } = attributes;
+    return { 'data-align': align };
+  },
 };
