@@ -1,6 +1,6 @@
 {
   "name": "@frontkom/g-section",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A customizable wrapper for your blocks",
   "main": "build/index.js",
   "gutenbergCloud": {
