@@ -76,7 +76,6 @@ export const settings = {
       backgroundImage: hasImageBg && `url('${backgroundImage}')`,
       color: hasImageBg && 'white',
     };
-
     const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
       backgroundColor: overlayColor || 'black',
@@ -211,7 +210,7 @@ export const settings = {
     const containerStyle = {
       backgroundColor: !hasImageBg ? backgroundColor : 'black',
       backgroundImage: hasImageBg && `url('${backgroundImage}')`,
-      color: backgroundType === 'image' && 'white',
+      color: hasImageBg && 'white',
     };
     const overlayStyle = !hasImageBg ? {} : {
       display: 'block',
