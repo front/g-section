@@ -186,7 +186,8 @@ export const settings = {
 
             { hasImageBg &&
               <BaseControl label={ __('Choose background image') }>
-                <MediaUpload type="image"
+                <MediaUpload
+                  allowedTypes={ ['image'] }
                   onSelect={ media => onSelectImage(media, 'backgroundImage') } render={ ({ open }) => (
                     <IconButton className="components-toolbar__control" label={ __('Edit image') }
                       icon="format-image" onClick={ open } />
